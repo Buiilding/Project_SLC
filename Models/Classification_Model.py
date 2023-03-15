@@ -1,6 +1,6 @@
 import torch #operated by facebook with a lot of library
 import torch.nn as nn
-import tqdm
+#import tqdm
 class Model(nn.Module):
     def __init__(self, num_classes = 10 ) :
         # super(AlexNet, self). __init__()

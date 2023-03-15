@@ -52,5 +52,6 @@ def unit_test(b,c,h,w):
     model = Model(num_classes = 27)
     im_input = torch.randn((b,c,w,h))
     out = model(im_input)
+    print(f'chick qua qua')
     return out
         

@@ -1,7 +1,7 @@
 import os 
 import cv2
 import matplotlib.pyplot as plt
-
+import argparse
 def main(FOLDER_PATH):
     
     names = [x for x in os.listdir(FOLDER_PATH)]
@@ -49,3 +49,12 @@ def main(FOLDER_PATH):
     fig.tight_layout()
 
     plt.show()
+
+
+if __name__ == '__main__':
+    
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--folder-path', type = str, default = './images', help = 'images folder path' )
+    # ...
+    args = parser.parse_args()
+    main(args.folder_path)

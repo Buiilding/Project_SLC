@@ -21,7 +21,7 @@ def inference( model, weight_path, im_path, num_class):
   image = cv2.imread(image_path)
   image_RGB = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
   # display the image
-  plt.imshow(image_RGB)
+  #plt.imshow(image_RGB)
   image_pil = Image.open(im_path)
   data_transform = transforms.Compose((
       transforms.Resize(64),

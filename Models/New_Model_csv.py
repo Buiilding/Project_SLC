@@ -8,9 +8,36 @@ import cv2
 import os
 import matplotlib.pyplot as plt
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+  
+class SignLanguageDataset(torch.utils.data.Dataset):
+    def __init__(self, data, transform=None):
+        self.data = data
+        self.transform = transform
 
+    def __len__(self):
+        return len(self.data)
 
-def Kaggle_dataset_Model(model,img,save_best_model, train_path, test_path):
+    def __getitem__(self, idx):
+        # Extract image data from DataFrame
+        image_data = self.data.iloc[idx, 1:].values
+
+        image_data = image_data.reshape(28, 28)
+
+        # Convert data type from int64 to uint8
+        img = np.uint8(image_data)
+        #using opencv to resize img from 28x28 to 64x64
+        img_resize = cv2.resize(img,(64,64))
+        #using merge to clone img_resize from hwx1 to hwx3 
+        img_extend = cv2.merge((img_resize,img_resize,img_resize))
+        # save image:
+        # cv2.imwrite('/content/sample_data/img.jpg', img_extend)
+        #convert img_extend from opencv to Pil image using Image.fromarray      
+        #image = Image.fromarray(image_data.astype('uint8'), 'L') #convert data
+        image = Image.fromarray(img_extend) #convert to Pil image
+
+model = SignLanguageDataset()
+
+def Kaggle_dataset_Model(model,img,save_best_model, train_path, test_path, model):
     #Preprocess data
     model = model(num_classes = 25)
     label = img['label'].values
@@ -31,32 +58,6 @@ def Kaggle_dataset_Model(model,img,save_best_model, train_path, test_path):
         transforms.ToTensor(),
         transforms.Normalize(mean=[0.485, 0.456 , 0.406], std=[0.229, 0.224, 0.225])
     ])
-    
-    class SignLanguageDataset(torch.utils.data.Dataset):
-    def __init__(self, data, transform=None):
-        self.data = data
-        self.transform = transform
-
-    def __len__(self):
-        return len(self.data)
-
-    def __getitem__(self, idx):
-        # Extract image data from DataFrame
-        image_data = self.data.iloc[idx, 1:].values
-
-        image_data = image_data.reshape(28, 28)
-  
-        # Convert data type from int64 to uint8
-        img = np.uint8(image_data)
-        #using opencv to resize img from 28x28 to 64x64
-        img_resize = cv2.resize(img,(64,64))
-        #using merge to clone img_resize from hwx1 to hwx3 
-        img_extend = cv2.merge((img_resize,img_resize,img_resize))
-        # save image:
-        # cv2.imwrite('/content/sample_data/img.jpg', img_extend)
-        #convert img_extend from opencv to Pil image using Image.fromarray      
-        #image = Image.fromarray(image_data.astype('uint8'), 'L') #convert data
-        image = Image.fromarray(img_extend) #convert to Pil image
         
         #TRAIN MODEL
 

@@ -6,6 +6,7 @@ from Classification_Model import Model
 from PIL import Image
 import torchvision.transforms as transforms
 import cv2
+import torch.nn as nn
 import torch.nn.functional as F
 # Load the model
 weight_path = 'C:/Users/tuana/Project_SLC/Source_Code/best.pth'

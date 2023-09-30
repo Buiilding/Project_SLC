@@ -1,8 +1,5 @@
 flask
-pickle
-Inference_square
 torch
-Classification_Model
 Pillow
 torchvision
 cv2

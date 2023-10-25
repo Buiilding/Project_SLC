@@ -6,6 +6,7 @@ from PIL import Image
 import torchvision.transforms as transforms
 import cv2
 import numpy as np
+import torch.nn as nn
 import torch.nn.functional as F
 
 def inference(model, weight_path, uploaded_file, num_class):
